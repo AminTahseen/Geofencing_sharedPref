@@ -84,19 +84,19 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                 date.setTimeZone(TimeZone.getTimeZone("GMT+5:00"));
                 String localTimeNow = date.format(currentLocalTime);
                 StartTime = localTimeNow;
-                notificationHelper.sendHighPriorityNotification("Entry","Entering on selected zone",MapsActivity.class);
+                    notificationHelper.sendHighPriorityNotification("Entry","Entering on selected zone",MainActivity.class);
               //  getCurrentLocation(context);
 
 
                 break;
             case Geofence.GEOFENCE_TRANSITION_DWELL:
                 Toast.makeText(context,"In the selected zone",Toast.LENGTH_SHORT).show();
-                notificationHelper.sendHighPriorityNotification("Dwell","In the selected zone",MapsActivity.class);
+                notificationHelper.sendHighPriorityNotification("Dwell","In the selected zone",MainActivity.class);
                 break;
             case Geofence.GEOFENCE_TRANSITION_EXIT:
 
                 onExit(context);
-                notificationHelper.sendHighPriorityNotification("Exit","Exit from the selected zone",MapsActivity.class);
+                notificationHelper.sendHighPriorityNotification("Exit","Exit from the selected zone",MainActivity.class);
                 Toast.makeText(context,"Exit from the selected zone",Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -168,10 +168,10 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                             double current_lat = locationResult.getLocations().get(locationindex).getLatitude();
                             double current_long = locationResult.getLocations().get(locationindex).getLongitude();
                            LatLng myLatlng = new LatLng(current_lat, current_long);
-                            MapsActivity.mMap.clear();
-                            MapsActivity.addMarker(myLatlng);
-                            MapsActivity.addCircle(myLatlng,200);
-                            MapsActivity.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatlng,16));
+                   //         MapsActivity.mMap.clear();
+                         //   MapsActivity.addMarker(myLatlng);
+                         //   MapsActivity.addCircle(myLatlng,200);
+                         //   MapsActivity.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatlng,16));
                             addGeofence(context,myLatlng,200);
 
                             Log.d("Receiver", String.valueOf(current_lat) + "," + String.valueOf(current_long));
@@ -201,10 +201,10 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                             double current_long = locationResult.getLocations().get(locationindex).getLongitude();
                             LatLng myLatlng = new LatLng(current_lat, current_long);
                             addGeofence(context,myLatlng,200);
-                            MapsActivity.mMap.clear();
-                            MapsActivity.addMarker(myLatlng);
-                            MapsActivity.addCircle(myLatlng,200);
-                            MapsActivity.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatlng,16));
+                           // MapsActivity.mMap.clear();
+                          //  MapsActivity.addMarker(myLatlng);
+                          //  MapsActivity.addCircle(myLatlng,200);
+                         //   MapsActivity.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatlng,16));
                             SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
                             if (!sharedPrefs.contains("mylist")) {
                                 Log.d("Dont Exists", "creating");
@@ -286,14 +286,14 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                 addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("MapsActivity","onSuccess..");
+                        Log.d("MainActivity","onSuccess..");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         String errorMessage= geofenceHelper.getErrorCode(e);
-                        Log.d("MapsActivity","onFailure:" + errorMessage);
+                        Log.d("MainActivity","onFailure:" + errorMessage);
                     }
                 });
     }

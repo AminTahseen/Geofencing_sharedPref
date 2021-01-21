@@ -2,6 +2,7 @@ package com.masterandroid.geofencing_sharedpref;
 
 import android.Manifest;
 import android.app.PendingIntent;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Looper;
@@ -22,7 +23,6 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,12 +32,16 @@ public class MainActivity extends AppCompatActivity {
     private GeofencingClient geofencingClient;
     private GeofenceHelper geofenceHelper;
     private String GEOFENCE_ID = "SOME_GEOFENCE_ID";
-    Button press;
+    Button press,view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        geofencingClient = LocationServices.getGeofencingClient(this);
+        geofenceHelper = new GeofenceHelper(this);
+
+        view=findViewById(R.id.view);
         press= findViewById(R.id.press);
         press.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,10 +49,13 @@ public class MainActivity extends AppCompatActivity {
                 enableUserLocation();
             }
         });
-
-        geofencingClient = LocationServices.getGeofencingClient(this);
-        geofenceHelper = new GeofenceHelper(this);
-
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent show=new Intent(MainActivity.this, show_locations.class);
+                startActivity(show);
+            }
+        });
     }
 
     private void enableUserLocation() {
