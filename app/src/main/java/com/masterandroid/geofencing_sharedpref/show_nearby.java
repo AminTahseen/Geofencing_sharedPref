@@ -52,7 +52,7 @@ public class show_nearby extends AppCompatActivity {
     {
         progressDialog = ProgressDialog.show(show_nearby.this, "Loading","Finding Nearby...", true);
         final ApiInterface apiInterface= ApiClient.getClient().create(ApiInterface.class);
-        Call<Example> call= apiInterface.getDetails(location,300,api_key);
+        Call<Example> call= apiInterface.getDetails(location,200,api_key);
         call.enqueue(new Callback<Example>() {
             @Override
             public void onResponse(Call<Example> call, Response<Example> response) {
