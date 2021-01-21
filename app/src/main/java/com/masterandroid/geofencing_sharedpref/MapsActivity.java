@@ -39,7 +39,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //for tutorial: https://www.youtube.com/watch?v=nmAtMqljH9M
 
-    public static GoogleMap mMap;
+    public static GoogleMap mMap; //Google map
     private GeofencingClient geofencingClient;
     private GeofenceHelper geofenceHelper;
     Button show_loc;

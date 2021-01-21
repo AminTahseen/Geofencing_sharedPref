@@ -86,8 +86,6 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                 StartTime = localTimeNow;
                     notificationHelper.sendHighPriorityNotification("Entry","Entering on selected zone",MainActivity.class);
               //  getCurrentLocation(context);
-
-
                 break;
             case Geofence.GEOFENCE_TRANSITION_DWELL:
                 Toast.makeText(context,"In the selected zone",Toast.LENGTH_SHORT).show();
