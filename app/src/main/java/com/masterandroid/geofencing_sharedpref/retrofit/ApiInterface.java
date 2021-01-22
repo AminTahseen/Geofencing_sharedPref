@@ -15,4 +15,6 @@ public interface ApiInterface {
     @GET("findplacefromtext/json?")
     Call<ResponseModel> getPlaceSearch(@Query("input") String Input, @Query("inputtype")String InputType
     , @Query("fields") String Fields, @Query("locationbias") String LocationBias, @Query("key") String Api_Key);
+
+
 }

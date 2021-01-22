@@ -63,7 +63,6 @@ public class show_nearby extends AppCompatActivity {
                         progressDialog.dismiss();
                         for(int i=0;i<response.body().getResults().size();i++)
                         {
-                            Toast.makeText(show_nearby.this, "Size "+response.body().getResults().size(), Toast.LENGTH_SHORT).show();
                             String placeName=response.body().getResults().get(i).getName();
                             Double lat = response.body().getResults().get(i).getGeometry().getLocation().getLat();
                             Double lng = response.body().getResults().get(i).getGeometry().getLocation().getLng();
@@ -72,6 +71,12 @@ public class show_nearby extends AppCompatActivity {
                             nearbyPlaceList.add(nearby);
                             nearbyAdapter adapter=new nearbyAdapter(nearbyPlaceList, show_nearby.this);
                             nearbyRecycler.setAdapter(adapter);
+                            adapter.setOnItemClickListener(new nearbyAdapter.onItemClickListener() {
+                                @Override
+                                public void onItemClick(int position) {
+                                    Toast.makeText(show_nearby.this, nearbyPlaceList.get(position).getPlaceName(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     }catch (Exception er)
                     {
