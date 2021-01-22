@@ -1,6 +1,7 @@
 package com.masterandroid.geofencing_sharedpref.adapters;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.masterandroid.geofencing_sharedpref.R;
+import com.masterandroid.geofencing_sharedpref.models.locResponse;
 import com.masterandroid.geofencing_sharedpref.models.nearbyPlace;
+import com.masterandroid.geofencing_sharedpref.retrofit.PHPApiClient;
+import com.masterandroid.geofencing_sharedpref.retrofit.PHPApiInterface;
 import com.masterandroid.geofencing_sharedpref.show_nearby;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class nearbyAdapter  extends RecyclerView.Adapter<nearbyAdapter.ViewHolder> {
@@ -51,6 +59,39 @@ public class nearbyAdapter  extends RecyclerView.Adapter<nearbyAdapter.ViewHolde
         holder.yesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                PHPApiInterface apiInterface = PHPApiClient.getClient().create(PHPApiInterface.class);
+
+                Call<locResponse> locResponseCall= apiInterface.saveLocation(
+                        "Amin123",
+                        Double.toString(data.getPlaceLatitude()),
+                        Double.toString(data.getPlaceLongitude()),
+                        data.getMainPlaceAddress(),
+                        data.getPlaceName(),
+                        data.getTypes().toString(),
+                        "Visited",
+                        "time"
+                );
+
+                locResponseCall.enqueue(new Callback<locResponse>() {
+                    @Override
+                    public void onResponse(Call<locResponse> call, Response<locResponse> response) {
+                        if(response.isSuccessful())
+                        {
+                            Log.d("Retrofit",response.message());
+                            Toast.makeText(activity, "Record successfully saved", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            Log.d("Retrofit err",response.toString());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<locResponse> call, Throwable t) {
+                        Log.d("Retrofit Failed",t.getMessage());
+
+                    }
+                });
                 Toast.makeText(activity,data.getPlaceName(), Toast.LENGTH_SHORT).show();
             }
         });
